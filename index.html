@@ -5,43 +5,160 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portal eSPeJe</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Animasi fade-in dan slide-up */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans">
 
   <div class="text-center p-6">
     <!-- Logo -->
-    <img src="https://espeje.com/logo.png" 
-         alt="Logo eSPeJe" 
+    <img src="https://espeje.com/logo.png"
+         alt="Logo eSPeJe"
          class="mx-auto mb-6 w-28 md:w-36">
     
     <!-- Judul -->
-    <h1 class="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">Selamat Datang di<br> <span class="text-yellow-400">eSPeJe 2025</span></h1>
+    <h1 class="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">
+      Selamat Datang di<br> 
+      <span class="text-yellow-400">eSPeJe 2025</span>
+    </h1>
     <p class="text-gray-400 mb-10">Pilih aplikasi yang ingin kamu gunakan!</p>
 
     <!-- Grid Tombol -->
     <div class="grid gap-6 md:grid-cols-2 max-w-lg mx-auto">
       
       <!-- Link SPJ -->
-      <a href="https://spj.espeje.com" 
+      <a href="https://spj.espeje.com"
          class="block bg-gray-800 hover:bg-gray-700 transition transform hover:-translate-y-1 rounded-2xl shadow-lg p-8">
         <h2 class="text-2xl font-bold mb-2">Desktop App eSPeJe</h2>
         <p class="text-gray-400 text-sm">Sistem Pengelolaan SPJ Honorarium dan SPPD Kegiatan secara cepat dan praktis</p>
       </a>
 
       <!-- Link SPPD -->
-      <a href="https://sppd.espeje.com" 
+      <a href="https://sppd.espeje.com"
          class="block bg-gray-800 hover:bg-gray-700 transition transform hover:-translate-y-1 rounded-2xl shadow-lg p-8">
         <h2 class="text-2xl font-bold mb-2">SPPD Online (Gratis)</h2>
-        <p class="text-gray-400 text-sm">Administrasi Perjalanan Dinas lebih mudah dan terstruktur dalam ganggamanmu</p>
+        <p class="text-gray-400 text-sm">Administrasi Perjalanan Dinas lebih mudah dan terstruktur dalam genggamanmu</p>
       </a>
 
     </div>
 
     <!-- Footer -->
     <div class="mt-12 text-gray-500 text-sm">
-      Hak Cipta eSPeJe ©  terdaftar di Direktorat Jenderal Kekayaan Intelektual - Kementerian Hukum dan HAM dengan nomor 000626635
+      Hak Cipta eSPeJe © terdaftar di Direktorat Jenderal Kekayaan Intelektual - 
+      Kementerian Hukum dan HAM dengan nomor 000626635
+    </div>
+
+    <!-- Counter kecil -->
+    <div class="mt-10 text-gray-500 text-[11px] text-center flex items-center justify-center gap-6 fade-in-up" id="counter-wrapper">
+      <div class="flex items-center gap-1">
+        <!-- Ikon Today -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M8 7V3m8 4V3m-9 8h10m-12 8h14a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        <span id="counter-today">Today: —</span>
+      </div>
+      <div class="flex items-center gap-1">
+        <!-- Ikon Total (Bar Chart) -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 21h16M8 17v-4m4 4V7m4 10v-6" />
+        </svg>
+        <span id="counter-total">Total: —</span>
+      </div>
     </div>
   </div>
 
+  <!-- Script Counter -->
+  <script>
+    (function () {
+      const namespace = "espeje.com"; 
+      const today = new Date().toISOString().slice(0,10);
+      const totalKey = "total";
+      const todayKey = "today-" + today;
+      const storageKey = "espeje_seen_" + today;
+
+      const elToday = document.getElementById("counter-today");
+      const elTotal = document.getElementById("counter-total");
+      const wrapper = document.getElementById("counter-wrapper");
+
+      function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      }
+
+      // Animasi angka jalan dari 0 -> target
+      function animateNumber(el, label, target) {
+        let start = 0;
+        const duration = 800; // ms
+        const steps = Math.ceil(duration / 30);
+        const increment = target / steps;
+
+        function update() {
+          start += increment;
+          if (start < target) {
+            el.textContent = label + ": " + formatNumber(Math.floor(start));
+            requestAnimationFrame(update);
+          } else {
+            el.textContent = label + ": " + formatNumber(target);
+          }
+        }
+        update();
+      }
+
+      async function countapi(key, increment = false) {
+        try {
+          const url = increment
+            ? `https://api.countapi.xyz/hit/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`
+            : `https://api.countapi.xyz/get/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`;
+          const res = await fetch(url);
+          if (!res.ok) {
+            if (increment) throw new Error("Failed to increment");
+            const r2 = await fetch(`https://api.countapi.xyz/hit/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`);
+            const d2 = await r2.json();
+            return d2.value ?? 0;
+          }
+          const data = await res.json();
+          return (data && typeof data.value !== "undefined") ? data.value : 0;
+        } catch (err) {
+          console.warn("countapi error for", key, err);
+          return null;
+        }
+      }
+
+      function showValues(todayVal, totalVal) {
+        if (todayVal !== null) animateNumber(elToday, "Today", todayVal);
+        if (totalVal !== null) animateNumber(elTotal, "Total", totalVal);
+        wrapper.classList.add("show"); // trigger animasi fade-in
+      }
+
+      (async () => {
+        const seenToday = localStorage.getItem(storageKey);
+        if (!seenToday) {
+          const [tVal, totVal] = await Promise.all([
+            countapi(todayKey, true),
+            countapi(totalKey, true)
+          ]);
+          showValues(tVal, totVal);
+          try { localStorage.setItem(storageKey, "1"); } catch(e) {}
+        } else {
+          const [tVal, totVal] = await Promise.all([
+            countapi(todayKey, false),
+            countapi(totalKey, false)
+          ]);
+          showValues(tVal, totVal);
+        }
+      })();
+    })();
+  </script>
 </body>
 </html>
