@@ -1,0 +1,20 @@
+{
+  "name": "eSPeJe Dashboard by @TOMMY",
+  "short_name": "eSPeJe Dashboard",
+  "start_url": "/dashboard/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "https://espeje-tommy.github.io/dashboard/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://espeje-tommy.github.io/dashboard/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
