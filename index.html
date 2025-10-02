@@ -22,6 +22,31 @@
   
   <title>Portal eSPeJe</title>
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* Animasi fade-in */
+    .fade-in { opacity: 0; transform: translateY(5px); animation: fadeInUp .8s ease forwards; }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* Glow pulse lembut pada angka */
+    .pulse { animation: pulseGlow 1.5s infinite; }
+    @keyframes pulseGlow {
+      0%,100% { text-shadow: 0 0 3px rgba(250,204,21,.6); }
+      50% { text-shadow: 0 0 8px rgba(250,204,21,1); }
+    }
+
+    /* Odometer rolling */
+    .odometer { 
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center; 
+      overflow: hidden; 
+      height: 1.4em; 
+      line-height: 1.4em; 
+    }
+    .odometer .digit { display: block; transition: transform .45s ease-out; will-change: transform; }
+  </style>
+
 </head>
 <body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans">
 
@@ -58,6 +83,67 @@
     <div class="mt-12 text-gray-500 text-sm">
       Hak Cipta © eSPeJe terdaftar di Direktorat Jenderal Kekayaan Intelektual - Kementerian Hukum dan HAM dengan nomor 000626635
     </div>
+
+    <!-- Hit Counter -->
+    <div class="mt-8 text-gray-500 text-xs space-y-2 fade-in">
+      <div class="flex items-center justify-center gap-2">
+        <span>👤 Pengunjung hari ini:</span>
+        <span id="daily-odo" class="odometer px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-400 font-bold">
+          <span id="daily-counter" class="digit pulse text-xs">0</span>
+        </span>
+      </div>
+      <div class="flex items-center justify-center gap-2">
+        <span>🌍 Total pengunjung:</span>
+        <span id="total-odo" class="odometer px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-400 font-bold">
+          <span id="total-counter" class="digit pulse text-xs">0</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script CounterAPI -->
+  <script>
+    function rollingUpdate(odoEl, newVal) {
+      const digitEl = odoEl.querySelector(".digit");
+      const currentVal = parseInt((digitEl.innerText || "0").replace(/\D/g, "")) || 0;
+      if (newVal === currentVal) return;
+
+      digitEl.style.transform = "translateY(100%)";
+      setTimeout(() => {
+        digitEl.innerText = newVal.toLocaleString();
+        digitEl.style.transform = "translateY(-100%)";
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            digitEl.style.transform = "translateY(0)";
+          });
+        });
+      }, 180);
+    }
+
+    async function updateCounters() {
+      const workspace = "espeje"; // ganti sesuai nama unikmu
+      const today = new Date().toISOString().split('T')[0];
+      const dailyKey = `portal-daily-${today}`;
+      const totalKey = "portal-total";
+
+      try {
+        const totalRes = await fetch(`https://api.counterapi.dev/v1/${workspace}/${totalKey}/up`);
+        const totalData = await totalRes.json();
+        rollingUpdate(document.getElementById('total-odo'), Number(totalData.count || 0));
+
+        const dailyRes = await fetch(`https://api.counterapi.dev/v1/${workspace}/${dailyKey}/up`);
+        const dailyData = await dailyRes.json();
+        rollingUpdate(document.getElementById('daily-odo'), Number(dailyData.count || 0));
+
+      } catch (err) {
+        console.error("Error CounterAPI:", err);
+        document.getElementById('total-counter').innerText = "Error";
+        document.getElementById('daily-counter').innerText = "Error";
+      }
+    }
+    updateCounters();
+  </script>
+    
   </div>
 
 </body>
