@@ -31,8 +31,8 @@
     /* Glow pulse lembut pada angka */
     .pulse { animation: pulseGlow 1.5s infinite; }
     @keyframes pulseGlow {
-      0%,100% { text-shadow: 0 0 3px rgba(250,204,21,.6); }
-      50% { text-shadow: 0 0 8px rgba(250,204,21,1); }
+      0%,100% { text-shadow: 0 0 2px rgba(253,224,71,.5); }
+      50% { text-shadow: 0 0 6px rgba(253,224,71,.8); }
     }
 
     /* Odometer rolling */
@@ -41,8 +41,8 @@
       align-items: center; 
       justify-content: center; 
       overflow: hidden; 
-      height: 1.4em; 
-      line-height: 1.4em; 
+      height: 1.2em; 
+      line-height: 1.2em; 
     }
     .odometer .digit { display: block; transition: transform .45s ease-out; will-change: transform; }
   </style>
@@ -84,18 +84,21 @@
       Hak Cipta © eSPeJe terdaftar di Direktorat Jenderal Kekayaan Intelektual - Kementerian Hukum dan HAM dengan nomor 000626635
     </div>
 
+    <!-- Garis pemisah -->
+    <div class="border-t border-gray-700 mt-6 mb-4 w-60 mx-auto fade-in"></div>
+
     <!-- Hit Counter -->
-    <div class="mt-8 text-gray-500 text-xs space-y-2 fade-in">
+    <div class="text-gray-400 text-[11px] space-y-1 fade-in">
       <div class="flex items-center justify-center gap-2">
         <span>👤 Pengunjung hari ini:</span>
-        <span id="daily-odo" class="odometer px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-400 font-bold">
-          <span id="daily-counter" class="digit pulse text-xs">0</span>
+        <span id="daily-odo" class="odometer px-2 py-0.5 rounded bg-yellow-500/10 text-yellow-300 font-semibold">
+          <span id="daily-counter" class="digit pulse text-[11px]">0</span>
         </span>
       </div>
       <div class="flex items-center justify-center gap-2">
         <span>🌍 Total pengunjung:</span>
-        <span id="total-odo" class="odometer px-2 py-0.5 rounded bg-yellow-500/20 text-yellow-400 font-bold">
-          <span id="total-counter" class="digit pulse text-xs">0</span>
+        <span id="total-odo" class="odometer px-2 py-0.5 rounded bg-yellow-500/10 text-yellow-300 font-semibold">
+          <span id="total-counter" class="digit pulse text-[11px]">0</span>
         </span>
       </div>
     </div>
