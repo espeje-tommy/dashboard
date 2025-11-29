@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Mengarahkan ke Email…</title>
+
+  <!-- Layer 1: Meta Refresh -->
+  <meta http-equiv="refresh" content="0;url=mailto:admin@espeje.com?subject=Halo...&body=Halo...%0D%0A..." />
+
+  <!-- Layer 2: JavaScript Redirect -->
+  <script>
+    window.location.href = "mailto:admin@espeje.com?subject=Halo...&body=Halo...%0D%0A...";
+  </script>
+</head>
+
+<body>
+  <!-- Layer 3: Fallback link jika semua redirect gagal -->
+  <p>
+    Jika tidak otomatis, klik tombol di bawah ini:<br><br>
+    <a href="mailto:admin@espeje.com?subject=Halo...&body=Halo...%0D%0A..." style="font-size: 20px;">
+      Kirim Email ke Admin
+    </a>
+  </p>
+</body>
+</html>
