@@ -1,25 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <title>Mengarahkan ke Email…</title>
 
-  <!-- Layer 1: Meta Refresh -->
-  <meta http-equiv="refresh" content="0;url=mailto:admin@espeje.com?subject=Halo...&body=Halo...%0D%0A..." />
+  <!-- Redirect otomatis melalui Meta -->
+  <meta http-equiv="refresh" content="0;url=mailto:admin@espeje.com?subject=Halo...%20saya%20ingin%20mencoba%20aplikasi%20trial%20nya&body=Halo...%20saya%20ingin%20mencoba%20aplikasi%20trial%20nya.%0D%0A%0D%0ANama%3A%0D%0ANo.HP%3A%0D%0AInstansi%3A%0D%0AEmail%3A" />
 
-  <!-- Layer 2: JavaScript Redirect -->
+  <!-- Redirect JavaScript sebagai backup -->
   <script>
-    window.location.href = "mailto:admin@espeje.com?subject=Halo...&body=Halo...%0D%0A...";
+    window.location.href = "mailto:admin@espeje.com?subject=Halo...%20saya%20ingin%20mencoba%20aplikasi%20trial%20nya&body=Halo...%20saya%20ingin%20mencoba%20aplikasi%20trial%20nya.%0D%0A%0D%0ANama%3A%0D%0ANo.HP%3A%0D%0AInstansi%3A%0D%0AEmail%3A";
   </script>
-</head>
 
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 60px 20px;
+      font-size: 18px;
+    }
+    a.button {
+      display: inline-block;
+      background: #007bff;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
 <body>
-  <!-- Layer 3: Fallback link jika semua redirect gagal -->
-  <p>
-    Jika tidak otomatis, klik tombol di bawah ini:<br><br>
-    <a href="mailto:admin@espeje.com?subject=Halo...&body=Halo...%0D%0A..." style="font-size: 20px;">
-      Kirim Email ke Admin
-    </a>
+  <p>Sedang membuka aplikasi Email…</p>
+  <p>Jika tidak otomatis, klik tombol di bawah ini:</p>
+
+  <a class="button" href="mailto:admin@espeje.com?subject=Halo...%20saya%20ingin%20mencoba%20aplikasi%20trial%20nya&body=Halo...%20saya%20ingin%20mencoba%20aplikasi%20trial%20nya.%0D%0A%0D%0ANama%3A%0D%0ANo.HP%3A%0D%0AInstansi%3A%0D%0AEmail%3A">
+    Kirim Email ke Admin
+  </a>
+
+  <p style="margin-top:35px; font-size:14px; color:#777;">
+    Anda aman — halaman ini hanya mengarahkan tanpa menyimpan data apa pun.
   </p>
 </body>
 </html>
