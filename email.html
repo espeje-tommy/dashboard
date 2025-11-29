@@ -9,7 +9,9 @@
 
   <!-- Redirect JavaScript sebagai backup -->
   <script>
-    window.location.href = "mailto:admin@espeje.com?subject=Halo...%20saya%20ingin%20mencoba%20aplikasi%20trial%20nya&body=Halo...%20saya%20ingin%20mencoba%20aplikasi%20trial%20nya.%0D%0A%0D%0ANama%3A%0D%0ANo.HP%3A%0D%0AInstansi%3A%0D%0AEmail%3A";
+    setTimeout(function () {
+      window.location.href = "mailto:admin@espeje.com?subject=Halo...%20saya%20ingin%20mencoba%20aplikasi%20trial%20nya&body=Halo...%20saya%20ingin%20mencoba%20aplikasi%20trial%20nya.%0D%0A%0D%0ANama%3A%0D%0ANo.HP%3A%0D%0AInstansi%3A%0D%0AEmail%3A";
+    }, 500);
   </script>
 
   <style>
@@ -18,6 +20,7 @@
       text-align: center;
       padding: 60px 20px;
       font-size: 18px;
+      color: #1f2933;
     }
     a.button {
       display: inline-block;
@@ -29,18 +32,33 @@
       font-size: 20px;
       margin-top: 20px;
     }
+    code {
+      background: #f3f4f6;
+      padding: 4px 6px;
+      border-radius: 4px;
+      font-size: 15px;
+    }
   </style>
 </head>
 <body>
-  <p>Sedang membuka aplikasi Email…</p>
-  <p>Jika tidak otomatis, klik tombol di bawah ini:</p>
+  <p><strong>Mengarahkan ke aplikasi Email…</strong></p>
+  <p>
+    Jika tidak otomatis terbuka,<br>
+    silakan klik tombol di bawah ini:
+  </p>
 
   <a class="button" href="mailto:admin@espeje.com?subject=Halo...%20saya%20ingin%20mencoba%20aplikasi%20trial%20nya&body=Halo...%20saya%20ingin%20mencoba%20aplikasi%20trial%20nya.%0D%0A%0D%0ANama%3A%0D%0ANo.HP%3A%0D%0AInstansi%3A%0D%0AEmail%3A">
     Kirim Email ke Admin
   </a>
 
-  <p style="margin-top:35px; font-size:14px; color:#777;">
-    Anda aman — halaman ini hanya mengarahkan tanpa menyimpan data apa pun.
+  <p style="margin-top:30px;font-size:15px;">
+    Atau kirim email secara manual ke:<br>
+    <code>admin@espeje.com</code>
+  </p>
+
+  <p style="margin-top:25px; font-size:13px; color:#777;">
+    Halaman ini hanya membantu membuka aplikasi email Anda.<br>
+    Tidak ada data yang disimpan di server.
   </p>
 </body>
 </html>
